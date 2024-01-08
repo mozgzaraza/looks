@@ -15,13 +15,17 @@
     "id": 2,
     "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
     "price": 1500,
-    "imageUrl": "/img/catalog/2.jpg"
+    "imageUrl": "/img/catalog/2.jpg",
+    "gender": "woman",
+    "category": "sweater"
   },
   {
     "id": 3,
     "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
     "price": 1300,
-    "imageUrl": "/img/catalog/3.jpg"
+    "imageUrl": "/img/catalog/3.jpg",
+    "gender": "man",
+    "category": "trousers"
   },
   {
     "id": 4,

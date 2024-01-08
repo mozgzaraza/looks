@@ -9,6 +9,8 @@ const Catalog = () => {
 
   const [selectedCategory, setSelectedCategory] = React.useState(null);
 
+  const [currentCategories, setCurrentCategories] = React.useState([]);
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -21,77 +23,40 @@ const Catalog = () => {
 
   const selectedGender = gender[genderIndex];
 
-  const manCategoryClothes = [
-    "МУЖСКИЕ НАКИДКИ И КИМОНО",
-    "ЛЕГГИНСЫ И ВЕЛОСИПЕДКИ",
-    "ШОРтЫ И ВЫСОКИЕ тРУСЫ",
-    "ЮБКИ И БАСКИ",
-    "КОРСЕтЫ",
-    "тОПЫ И ЛИФЫ",
-    "КОМБИНЕЗОНЫ",
-    "НАКИДКИ И КИМОНО",
-    "ЛЕГГИНСЫ И ВЕЛОСИПЕДКИ",
-    "ШОРтЫ И ВЫСОКИЕ тРУСЫ",
-    "ЮБКИ И БАСКИ",
-    "КОРСЕтЫ",
-    "тОПЫ И ЛИФЫ",
-    "КОМБИНЕЗОНЫ",
-    "НАКИДКИ И КИМОНО",
-    "ЛЕГГИНСЫ И ВЕЛОСИПЕДКИ",
-    "ШОРтЫ И ВЫСОКИЕ тРУСЫ",
-    "ЮБКИ И БАСКИ",
-    "КОРСЕтЫ",
-    "Платья",
-  ];
+  const manCategoryClothes = ["Все", "мужские", "Одежды"];
   const manCategoryShoes = ["Все", "мужские", "Кроссовки"];
   const manCategoryAccessories = ["Все", "мужские", "Браслеты"];
 
-  const womanCategoryClothes = [
-    "ЖЕНСКИЕ НАКИДКИ И КИМОНО",
-    "ЛЕГГИНСЫ И ВЕЛОСИПЕДКИ",
-    "ШОРтЫ И ВЫСОКИЕ тРУСЫ",
-    "ЮБКИ И БАСКИ",
-    "КОРСЕтЫ",
-    "тОПЫ И ЛИФЫ",
-    "КОМБИНЕЗОНЫ",
-    "НАКИДКИ И КИМОНО",
-    "ЛЕГГИНСЫ И ВЕЛОСИПЕДКИ",
-    "ШОРтЫ И ВЫСОКИЕ тРУСЫ",
-    "ЮБКИ И БАСКИ",
-    "ЖЕНСКОЕЕЕЕЕЕ",
-    "тОПЫ И ЛИФЫ",
-    "КОМБИНЕЗОНЫ",
-    "НАКИДКИ И КИМОНО",
-    "ЛЕГГИНСЫ И ВЕЛОСИПЕДКИ",
-    "ШОРтЫ И ВЫСОКИЕ тРУСЫ",
-    "ЮБКИ И БАСКИ",
-    "КОРСЕтЫ",
-    "Платья",
-  ];
+  const womanCategoryClothes = ["Все", "женские", "Одежды"];
   const womanCategoryShoes = ["Все", "женские", "Кроссовки"];
   const womanCategoryAccessories = ["Все", "женские", "Браслеты"];
 
   const categoriesData = {
     clothes: {
-      Мужское: manCategoryClothes,
-      Женское: womanCategoryClothes,
+      мужское: manCategoryClothes,
+      женское: womanCategoryClothes,
     },
     shoes: {
-      Мужское: manCategoryShoes,
-      Женское: womanCategoryShoes,
+      мужское: manCategoryShoes,
+      женское: womanCategoryShoes,
     },
     accessories: {
-      Мужское: manCategoryAccessories,
-      Женское: womanCategoryAccessories,
+      мужское: manCategoryAccessories,
+      женское: womanCategoryAccessories,
     },
   };
 
   const [openCategory, setOpenCategory] = React.useState(false);
 
   const onClickCategory = (category) => {
-    setOpenCategory(!openCategory);
-    setSelectedCategory(category);
+    if (openCategory && selectedCategory != category) {
+      setSelectedCategory(category);
+    } else {
+      setOpenCategory(!openCategory);
+      setSelectedCategory(category);
+    }
   };
+  console.log(openCategory);
   return (
     <div className="catalog">
       <div className="container">
@@ -118,8 +83,13 @@ const Catalog = () => {
               </li>
               <li
                 onClick={() => onClickCategory("clothes")}
+                // className={
+                //   openCategory === true
+                //     ? "catalog__category-item catalog__category-item--clothes catalog__category-item--active"
+                //     : "catalog__category-item catalog__category-item--clothes"
+                // }
                 className={
-                  openCategory === true
+                  selectedCategory === "clothes" && openCategory
                     ? "catalog__category-item catalog__category-item--clothes catalog__category-item--active"
                     : "catalog__category-item catalog__category-item--clothes"
                 }
@@ -128,13 +98,21 @@ const Catalog = () => {
               </li>
               <li
                 onClick={() => onClickCategory("shoes")}
-                className="catalog__category-item catalog__category-item--shoes"
+                className={
+                  selectedCategory === "shoes" && openCategory
+                    ? "catalog__category-item catalog__category-item--clothes catalog__category-item--active"
+                    : "catalog__category-item catalog__category-item--clothes"
+                }
               >
                 обувь
               </li>
               <li
                 onClick={() => onClickCategory("accessories")}
-                className="catalog__category-item catalog__category-item--accessories"
+                className={
+                  selectedCategory === "accessories" && openCategory
+                    ? "catalog__category-item catalog__category-item--clothes catalog__category-item--active"
+                    : "catalog__category-item catalog__category-item--clothes"
+                }
               >
                 аксессуары
               </li>
@@ -146,13 +124,19 @@ const Catalog = () => {
                   {gender[genderIndex]} одежда
                 </span>
                 <ul className="catalog__category-popup">
-                  {genderIndex === 0
+                  {categoriesData[selectedCategory][selectedGender].map(
+                    (category, index) => (
+                      <CatalogCategoryItem key={index} category={category} />
+                    )
+                  )}
+
+                  {/* {genderIndex === 0
                     ? womanCategoryClothes.map((category, index) => (
                         <CatalogCategoryItem key={index} category={category} />
                       ))
                     : manCategoryClothes.map((category, index) => (
                         <CatalogCategoryItem key={index} category={category} />
-                      ))}
+                      ))} */}
                 </ul>
               </div>
             )}
