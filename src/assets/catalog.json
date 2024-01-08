@@ -1,0 +1,62 @@
+[
+  {
+    "id": 0,
+    "title": "бежевый блейзер с нагрудными карманами",
+    "price": 1700,
+    "imageUrl": "/img/catalog/0.jpg"
+  },
+  {
+    "id": 1,
+    "title": "ФИОЛЕТОВАЯ ШУБА в ПОЛ",
+    "price": 2000,
+    "imageUrl": "/img/catalog/1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
+    "price": 1500,
+    "imageUrl": "/img/catalog/2.jpg"
+  },
+  {
+    "id": 3,
+    "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
+    "price": 1300,
+    "imageUrl": "/img/catalog/3.jpg"
+  },
+  {
+    "id": 4,
+    "title": "ФИОЛЕТОВАЯ ШУБА в ПОЛ",
+    "price": 2000,
+    "imageUrl": "/img/catalog/1.jpg"
+  },
+  {
+    "id": 5,
+    "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
+    "price": 1500,
+    "imageUrl": "/img/catalog/2.jpg"
+  },
+  {
+    "id": 6,
+    "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
+    "price": 1300,
+    "imageUrl": "/img/catalog/3.jpg"
+  },
+  {
+    "id": 7,
+    "title": "ФИОЛЕТОВАЯ ШУБА в ПОЛ",
+    "price": 2000,
+    "imageUrl": "/img/catalog/1.jpg"
+  },
+  {
+    "id": 8,
+    "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
+    "price": 1500,
+    "imageUrl": "/img/catalog/2.jpg"
+  },
+  {
+    "id": 9,
+    "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
+    "price": 122222,
+    "imageUrl": "/img/catalog/3.jpg"
+  }
+]
