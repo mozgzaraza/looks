@@ -1,19 +1,32 @@
 import React from "react";
 
 import CatalogItem from "../components/CatalogItem";
+import Skeleton from "../components/CatalogItem/Skeleton";
 import CatalogCategoryItem from "../components/CatalogCategoryItem";
-import catalog from "../assets/catalog.json";
 
 const Catalog = () => {
+  const [items, setItems] = React.useState([]);
+
   const [genderIndex, setGenderIndex] = React.useState(1);
 
   const [selectedCategory, setSelectedCategory] = React.useState(null);
 
-  const [currentCategories, setCurrentCategories] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
+    setIsLoading(true);
+    fetch(
+      `https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setItems(json);
+        setIsLoading(false);
+      });
     window.scrollTo(0, 0);
-  }, []);
+  }, [genderIndex]);
 
   const onClickGender = (index) => {
     setGenderIndex(index);
@@ -23,11 +36,29 @@ const Catalog = () => {
 
   const selectedGender = gender[genderIndex];
 
-  const manCategoryClothes = ["Все", "мужские", "Одежды"];
+  const manCategoryClothes = [
+    "Все",
+    "мужские",
+    "Одежды",
+    "Свитеры",
+    "Брюки",
+    "рубашки",
+    "джинсы",
+    "пальто",
+  ];
   const manCategoryShoes = ["Все", "мужские", "Кроссовки"];
   const manCategoryAccessories = ["Все", "мужские", "Браслеты"];
 
-  const womanCategoryClothes = ["Все", "женские", "Одежды"];
+  const womanCategoryClothes = [
+    "Все",
+    "женские",
+    "Одежды",
+    "Свитеры",
+    "Брюки",
+    "рубашки",
+    "джинсы",
+    "пальто",
+  ];
   const womanCategoryShoes = ["Все", "женские", "Кроссовки"];
   const womanCategoryAccessories = ["Все", "женские", "Браслеты"];
 
@@ -56,7 +87,7 @@ const Catalog = () => {
       setSelectedCategory(category);
     }
   };
-  console.log(openCategory);
+
   return (
     <div className="catalog">
       <div className="container">
@@ -83,11 +114,6 @@ const Catalog = () => {
               </li>
               <li
                 onClick={() => onClickCategory("clothes")}
-                // className={
-                //   openCategory === true
-                //     ? "catalog__category-item catalog__category-item--clothes catalog__category-item--active"
-                //     : "catalog__category-item catalog__category-item--clothes"
-                // }
                 className={
                   selectedCategory === "clothes" && openCategory
                     ? "catalog__category-item catalog__category-item--clothes catalog__category-item--active"
@@ -129,14 +155,6 @@ const Catalog = () => {
                       <CatalogCategoryItem key={index} category={category} />
                     )
                   )}
-
-                  {/* {genderIndex === 0
-                    ? womanCategoryClothes.map((category, index) => (
-                        <CatalogCategoryItem key={index} category={category} />
-                      ))
-                    : manCategoryClothes.map((category, index) => (
-                        <CatalogCategoryItem key={index} category={category} />
-                      ))} */}
                 </ul>
               </div>
             )}
@@ -152,9 +170,9 @@ const Catalog = () => {
         </div>
 
         <div className="catalog__content">
-          {catalog.map((obj) => (
-            <CatalogItem key={obj.id} {...obj} />
-          ))}
+          {isLoading
+            ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
+            : items.map((obj) => <CatalogItem key={obj.id} {...obj} />)}
         </div>
       </div>
     </div>
