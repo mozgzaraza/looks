@@ -1,12 +1,9 @@
 // import { Link } from "react-router-dom";
 
-function CatalogCategoryItem({ category }) {
+function CatalogCategoryItem({ category, onSelectedCategory }) {
   return (
     <li className="catalog__category-popupitem">
-      <span>{category}</span>
-      {/* <Link to={`/catalog/${category}`}>
-        <span>{category}</span>
-      </Link> */}
+      <span onClick={() => onSelectedCategory(category)}>{category}</span>
     </li>
   );
 }
