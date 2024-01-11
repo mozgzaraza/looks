@@ -1,66 +1,194 @@
 [
   {
     "id": 0,
-    "title": "бежевый блейзер с нагрудными карманами",
-    "price": 1700,
-    "imageUrl": "/img/catalog/0.jpg"
+    "title": "БЕЖЕВЫЕ ШТАНЫ ЖЕНСКИЕ",
+    "price": 5000,
+    "imageUrl": "/img/catalog/0.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "брюки",
+    "date": 19990110,
+    "color": "бежевый",
+    "size": ["s", "m", "l", "xl", "xxl"]
   },
   {
     "id": 1,
-    "title": "ФИОЛЕТОВАЯ ШУБА в ПОЛ",
-    "price": 2000,
-    "imageUrl": "/img/catalog/1.jpg"
+    "title": "СЕРЫЙ СВИТЕР МУЖСКОЙ",
+    "price": 3000,
+    "imageUrl": "/img/catalog/1.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "свитеры",
+    "date": 20240110,
+    "color": "серый",
+    "size": ["s", "m", "l", "xl", "xxl"]
   },
   {
     "id": 2,
-    "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
+    "title": "ЧЕРНЫЕ ШТАНЫ ЖЕНСКИЕ",
     "price": 1500,
     "imageUrl": "/img/catalog/2.jpg",
-    "gender": "woman",
-    "category": "sweater"
+    "gender": "0",
+    "type": "clothes",
+    "category": "брюки",
+    "date": 20230406,
+    "color": "черный",
+    "size": ["xs", "s", "m", "l"]
   },
   {
     "id": 3,
-    "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
-    "price": 1300,
+    "title": "ЗЕЛЕНАЯ РУБАШКА МУЖСКАЯ",
+    "price": 2000,
     "imageUrl": "/img/catalog/3.jpg",
-    "gender": "man",
-    "category": "trousers"
+    "gender": "1",
+    "type": "clothes",
+    "category": "рубашки",
+    "date": 20230413,
+    "color": "зеленый",
+    "size": ["s", "m", "l"]
   },
   {
     "id": 4,
-    "title": "ФИОЛЕТОВАЯ ШУБА в ПОЛ",
-    "price": 2000,
-    "imageUrl": "/img/catalog/1.jpg"
+    "title": "ЗОЛОТЫЕ ДЖИНСЫ ЖЕНСКИЕ",
+    "price": 2500,
+    "imageUrl": "/img/catalog/0.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "джинсы",
+    "date": 20230312,
+    "color": "золотой",
+    "size": ["xs", "s", "m", "l", "xl", "xxl"]
   },
   {
     "id": 5,
-    "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
-    "price": 1500,
-    "imageUrl": "/img/catalog/2.jpg"
+    "title": "СВЕТЛЫЕ ДЖИНСЫ МУЖСКИЕ",
+    "price": 7000,
+    "imageUrl": "/img/catalog/1.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "джинсы",
+    "date": 20230321,
+    "color": "голубой",
+    "size": ["s", "m"]
   },
   {
     "id": 6,
-    "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
-    "price": 1300,
-    "imageUrl": "/img/catalog/3.jpg"
+    "title": "ЧЕРНОЕ ПАЛЬТО ЖЕНСКОЕ",
+    "price": 1500,
+    "imageUrl": "/img/catalog/2.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "пальто",
+    "date": 20230327,
+    "color": "черный",
+    "size": ["s", "m", "l", "xl"]
   },
   {
     "id": 7,
-    "title": "ФИОЛЕТОВАЯ ШУБА в ПОЛ",
-    "price": 2000,
-    "imageUrl": "/img/catalog/1.jpg"
+    "title": "БЕЖЕВОЕ ПАЛЬТО МУЖСКОЕ",
+    "price": 1000,
+    "imageUrl": "/img/catalog/3.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "пальто",
+    "date": 20230121,
+    "color": "бежевый",
+    "size": ["m", "l", "xl", "xxl"]
   },
   {
     "id": 8,
-    "title": "СВЕТЛЫЙ БЛЕЙЗЕР С НАГРУДНЫМИ КАРМАНАМИ",
-    "price": 1500,
-    "imageUrl": "/img/catalog/2.jpg"
+    "title": "ФИОЛЕТОВЫЕ ШТАНЫ ЖЕНСКИЕ",
+    "price": 2300,
+    "imageUrl": "/img/catalog/0.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "pants",
+    "date": 20230826,
+    "color": "фиолетовый",
+    "size": ["xs", "s", "m", "l", "xl", "xxl"]
   },
   {
     "id": 9,
-    "title": "СВЕТЛЫЕ ШТАНЫ ДЛЯ КЕМПИНГА С КАРМАНАМИ",
-    "price": 122222,
-    "imageUrl": "/img/catalog/3.jpg"
+    "title": "ЖЕЛТЫЙ СВИТЕР МУЖСКОЙ",
+    "price": 6000,
+    "imageUrl": "/img/catalog/1.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "свитеры",
+    "date": 20231026,
+    "color": "желтый",
+    "size": ["xs", "s", "m", "l", "xl", "xxl"]
+  },
+  {
+    "id": 10,
+    "title": "КОРИЧНЕВЫЕ ШТАНЫ ЖЕНСКИЕ",
+    "price": 1500,
+    "imageUrl": "/img/catalog/2.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "брюки",
+    "date": 20241026,
+    "color": "коричневый",
+    "size": ["xs", "s", "m", "l", "xl", "xxl"]
+  },
+  {
+    "id": 11,
+    "title": "БЕЖЕВАЯ РУБАШКА МУЖСКАЯ",
+    "price": 6500,
+    "imageUrl": "/img/catalog/3.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "рубашки",
+    "date": 20230802,
+    "color": "бежевый",
+    "size": ["s", "m", "l", "xl"]
+  },
+  {
+    "id": 12,
+    "title": "СЕРЫЕ ДЖИНСЫ ЖЕНСКИЕ",
+    "price": 3500,
+    "imageUrl": "/img/catalog/0.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "джинсы",
+    "date": 20230806,
+    "color": "серый",
+    "size": ["xs", "s", "m", "l"]
+  },
+  {
+    "id": 13,
+    "title": "СИНИЕ ДЖИНСЫ МУЖСКИЕ",
+    "price": 7000,
+    "imageUrl": "/img/catalog/1.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "джинсы",
+    "date": 20210826,
+    "color": "синий",
+    "size": ["xl", "xxl"]
+  },
+  {
+    "id": 14,
+    "title": "ЧЕРНОЕ ПАЛЬТО ЖЕНСКОЕ",
+    "price": 11000,
+    "imageUrl": "/img/catalog/2.jpg",
+    "gender": "0",
+    "type": "clothes",
+    "category": "пальто",
+    "date": 20200826,
+    "color": "черный",
+    "size": ["xs", "s", "m", "l"]
+  },
+  {
+    "id": 15,
+    "title": "БЕЖЕВОЕ ПАЛЬТО МУЖСКОЕ",
+    "price": 12000,
+    "imageUrl": "/img/catalog/3.jpg",
+    "gender": "1",
+    "type": "clothes",
+    "category": "пальто",
+    "date": 20070826,
+    "color": "бежевый",
+    "size": ["m", "l", "xl", "xxl"]
   }
 ]

@@ -19,16 +19,38 @@ const Catalog = () => {
 
   const [openSort, setOpenSort] = React.useState(false);
 
-  const [selectedSort, setSelectedSort] = React.useState(0);
+  const [selectedSort, setSelectedSort] = React.useState({
+    name: "по новизне",
+    sortProperty: "date&order=desc",
+  });
+
+  const [selectedSizes, setSelectedSizes] = React.useState([]);
+  const [availableSizes, setAvailableSizes] = React.useState([]);
+
+  const [selectedColor, setSelectedColor] = React.useState([]);
+  const [availableColor, setAvailableColor] = React.useState([]);
+
+  const color = ["черный", "бежевый", "серый", "голубой"];
 
   React.useEffect(() => {
     setIsLoading(true);
+    const categoryApi =
+      selectedCategory !== "*" ? `&category=${selectedCategory}` : "";
+    const sizeApi =
+      selectedSizes.length > 0 ? `&size=${selectedSizes.join("|")}` : "";
+
+    const colorApi =
+      selectedColor.length > 0 ? `&color=${selectedColor.join("|")}` : "";
+    // fetch(
+    //   `https://659c1f85d565feee2dac75bf.mockapi.io/items?color=${selectedColor.join(
+    //     "|"
+    //   )}`
+    // )
+    console.log(uniqueColors, uniqueSizes);
     fetch(
       selectedAll
-        ? ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}`
-        : ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}${
-            selectedCategory !== "*" ? `&category=${selectedCategory}` : ""
-          }`
+        ? ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}&sortBy=${selectedSort.sortProperty}${colorApi}${sizeApi}$`
+        : ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}&sortBy=${selectedSort.sortProperty}${categoryApi}${colorApi}${sizeApi}`
     )
       .then((res) => {
         return res.json();
@@ -38,7 +60,14 @@ const Catalog = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [genderIndex, selectedCategory, selectedAll]);
+  }, [
+    genderIndex,
+    selectedCategory,
+    selectedAll,
+    selectedSort,
+    selectedSizes,
+    selectedColor,
+  ]);
 
   const onClickGender = (index) => {
     setGenderIndex(index);
@@ -61,28 +90,94 @@ const Catalog = () => {
     setOpenCategory(false);
     setSelectedType(null);
     setOpenSort(false);
-    console.log(items.length);
   };
+
   const handleCategoryChange = (newCategory) => {
     setSelectedCategory(newCategory);
     setOpenCategory(false);
     setSelectedAll(false);
+    setSelectedColor([]);
+    setSelectedSizes([]);
   };
+  const onClickFilter = () => {
+    setOpenSort(!openSort);
+    setAvailableSizes(uniqueSizes);
+    setAvailableColor(uniqueColors);
+  };
+  const customSizeOrder = (a, b) => {
+    const isNumeric = (value) => !isNaN(value);
+    const parseSize = (size) => (isNumeric(size) ? parseInt(size, 10) : size);
+    if (isNumeric(a) && isNumeric(b)) {
+      return parseSize(a) - parseSize(b);
+    }
+    const sizeOrder = ["xs", "s", "m", "l", "xl", "xxl"];
+    return sizeOrder.indexOf(parseSize(a)) - sizeOrder.indexOf(parseSize(b));
+  };
+
+  const currentAvailableSizes = items.reduce((sizes, item) => {
+    if (item.size) {
+      sizes.push(...item.size);
+    }
+    return sizes;
+  }, []);
+
+  const uniqueSizes = [...new Set(currentAvailableSizes)].sort(customSizeOrder);
+  const onClickSize = (sizeName) => {
+    if (selectedSizes.includes(sizeName)) {
+      setSelectedSizes((selectedSizes) =>
+        selectedSizes.filter((size) => size !== sizeName)
+      );
+    } else {
+      setSelectedSizes((selectedSizes) => [...selectedSizes, sizeName]);
+    }
+  };
+  const currentAvailableColors = items.reduce((colors, item) => {
+    if (item.color) {
+      colors.push(item.color);
+    }
+    return colors;
+  }, []);
+
+  const uniqueColors = [...new Set(currentAvailableColors)];
+
+  const onClickColor = (colorName) => {
+    if (selectedColor.includes(colorName)) {
+      setSelectedColor((selectedColor) =>
+        selectedColor.filter((size) => size !== colorName)
+      );
+    } else {
+      setSelectedColor((selectedColor) => [...selectedColor, colorName]);
+    }
+  };
+  console.log(uniqueColors, uniqueSizes, "2 консль");
+
+  const allSizes = items.reduce((sizes, item) => {
+    sizes.push(...item.size);
+    return sizes;
+  }, []);
+
+  // const uniqueSizes = [...new Set(allSizes)];
 
   const gender = ["женское", "мужское"];
 
   const selectedGender = gender[genderIndex];
 
   // const manCategoryClothes = [
-  //   { display: "Все", value: "all" },
-  //   { display: "мужские", value: "men" },
-  //   { display: "Одежды", value: "clothes" },
-  //   { display: "Свитеры", value: "sweaters" },
-  //   { display: "Брюки", value: "pants" },
-  //   { display: "рубашки", value: "shirts" },
-  //   { display: "джинсы", value: "jeans" },
-  //   { display: "пальто", value: "coat" },
+  //   { title: "Все", value: "all" },
+  //   { title: "мужские", value: "men" },
+  //   { title: "Одежды", value: "clothes" },
+  //   { title: "Свитеры", value: "sweaters" },
+  //   { title: "Брюки", value: "pants" },
+  //   { title: "рубашки", value: "shirts" },
+  //   { title: "джинсы", value: "jeans" },
+  //   { title: "пальто", value: "coat" },
   // ];
+  const manCategoryClothesTitle = "мужская одежда";
+  const manCategoryShoesTitle = "мужская обувь";
+  const manCategoryAccessoriesTitle = "мужские акссесуары";
+  const womanCategoryClothesTitle = "женская одежда";
+  const womanCategoryShoesTitle = "женская обувь";
+  const womanCategoryAccessoriesTitle = "женские акссесуары";
   const manCategoryClothes = [
     "Все",
     "мужские",
@@ -93,7 +188,7 @@ const Catalog = () => {
     "джинсы",
     "пальто",
   ];
-  const manCategoryShoes = ["Вся", "мужская", "обувь"];
+  const manCategoryShoes = ["Вся", "мужская", "обувь", "кроссовки"];
   const manCategoryAccessories = ["Все", "мужские", "браслеты"];
 
   const womanCategoryClothes = [
@@ -123,10 +218,25 @@ const Catalog = () => {
       женское: womanCategoryAccessories,
     },
   };
-  const sort = ["по новизне", "сначала дешевые", "сначала дорогие"];
+
+  const sort = [
+    {
+      name: "по новизне",
+      sortProperty: "date&order=desc",
+    },
+    {
+      name: "сначала дешевые",
+      sortProperty: "price&order=asc",
+    },
+    {
+      name: "сначала дорогие",
+      sortProperty: "price&order=desc",
+    },
+  ];
 
   return (
     <div className="catalog">
+      <h1>{availableColor.join("|")}</h1>
       <div className="container">
         <div className="catalog__type">
           <ul className="catalog__gender">
@@ -216,7 +326,7 @@ const Catalog = () => {
           </h1>
           <div className="catalog__filter-popupinner">
             <button
-              onClick={() => setOpenSort(!openSort)}
+              onClick={() => onClickFilter()}
               className="catalog__filter-btn"
             >
               фильтр и сортировка
@@ -231,151 +341,56 @@ const Catalog = () => {
               <div className="catalog__size-inner">
                 <span>размер</span>
                 <ul className="catalog__size">
-                  <li className="catalog__size-item">
-                    <label className="catalog__size-label">
-                      <input type="checkbox" name="size" />
+                  {uniqueSizes.map((obj, i) => (
+                    <li
+                      onClick={() => onClickSize(obj)}
+                      key={i}
+                      className={
+                        selectedSizes.includes(obj)
+                          ? "catalog__size-item catalog__size-item--active"
+                          : "catalog__size-item"
+                      }
+                    >
                       <span></span>
-                      xs
-                    </label>
-                  </li>
-                  <li className="catalog__size-item">
-                    <label className="catalog__size-label">
-                      <input type="checkbox" name="size" />
-                      <span></span>s
-                    </label>
-                  </li>{" "}
-                  <li className="catalog__size-item">
-                    <label className="catalog__size-label">
-                      <input type="checkbox" name="size" />
-                      <span></span>m
-                    </label>
-                  </li>{" "}
-                  <li className="catalog__size-item">
-                    <label className="catalog__size-label">
-                      <input type="checkbox" name="size" />
-                      <span></span>l
-                    </label>
-                  </li>{" "}
-                  <li className="catalog__size-item">
-                    <label className="catalog__size-label">
-                      <input type="checkbox" name="size" />
-                      <span></span>
-                      xl
-                    </label>
-                  </li>{" "}
-                  <li className="catalog__size-item">
-                    <label className="catalog__size-label">
-                      <input type="checkbox" name="size" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
+                      {obj}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="catalog__color-inner">
                 <span>цвет</span>
                 <ul className="catalog__color">
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
+                  {uniqueColors.map((obj, i) => (
+                    <li
+                      onClick={() => onClickColor(obj)}
+                      key={i}
+                      className={
+                        selectedColor.includes(obj)
+                          ? "catalog__color-item catalog__color-item--active"
+                          : "catalog__color-item"
+                      }
+                    >
                       <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
-                  <li className="catalog__color-item">
-                    <label className="catalog__color-label">
-                      <input type="checkbox" name="color" />
-                      <span></span>
-                      xxl
-                    </label>
-                  </li>
+                      {obj}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="catalog__sort-inner">
                 <span>сортировка</span>
                 <ul className="catalog__sort">
-                  {sort.map((name, i) => (
+                  {sort.map((obj, i) => (
                     <li
-                      onClick={() => setSelectedSort(i)}
+                      onClick={() => setSelectedSort(obj)}
                       key={i}
                       className={
-                        selectedSort === i
+                        selectedSort.sortProperty === obj.sortProperty
                           ? "catalog__sort-item catalog__sort-item--active"
                           : "catalog__sort-item "
                       }
                     >
                       <span></span>
-                      {name}
+                      {obj.name}
                     </li>
                   ))}
                 </ul>
