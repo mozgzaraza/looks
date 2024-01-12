@@ -6,10 +6,11 @@ import CatalogCategoryItem from "../components/CatalogCategoryItem";
 
 const Catalog = () => {
   const [items, setItems] = React.useState([]);
+  const [allItems, setAllItems] = React.useState([]);
 
   const [genderIndex, setGenderIndex] = React.useState(1);
 
-  const [selectedType, setSelectedType] = React.useState(null);
+  const [selectedType, setSelectedType] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("*");
   const [selectedAll, setSelectedAll] = React.useState(true);
 
@@ -30,8 +31,6 @@ const Catalog = () => {
   const [selectedColor, setSelectedColor] = React.useState([]);
   const [availableColor, setAvailableColor] = React.useState([]);
 
-  const color = ["черный", "бежевый", "серый", "голубой"];
-
   React.useEffect(() => {
     setIsLoading(true);
     const categoryApi =
@@ -46,19 +45,25 @@ const Catalog = () => {
     //     "|"
     //   )}`
     // )
-    console.log(uniqueColors, uniqueSizes);
     fetch(
       selectedAll
-        ? ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}&sortBy=${selectedSort.sortProperty}${colorApi}${sizeApi}$`
+        ? ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}&sortBy=${selectedSort.sortProperty}${colorApi}${sizeApi}`
         : ` https://659c1f85d565feee2dac75bf.mockapi.io/items?gender=${genderIndex}&sortBy=${selectedSort.sortProperty}${categoryApi}${colorApi}${sizeApi}`
     )
       .then((res) => {
         return res.json();
       })
       .then((json) => {
-        setItems(json);
-        setIsLoading(false);
+        if (selectedAll) {
+          setAllItems(json);
+          setItems(json);
+          setIsLoading(false);
+        } else {
+          setItems(json);
+          setIsLoading(false);
+        }
       });
+
     window.scrollTo(0, 0);
   }, [
     genderIndex,
@@ -74,6 +79,8 @@ const Catalog = () => {
     setSelectedAll(true);
     setOpenCategory(false);
     setOpenSort(false);
+    setSelectedColor([]);
+    setSelectedSizes([]);
   };
 
   const onClickCategory = (category) => {
@@ -88,8 +95,10 @@ const Catalog = () => {
   const onClickAll = () => {
     setSelectedAll(true);
     setOpenCategory(false);
-    setSelectedType(null);
+    setSelectedType("");
     setOpenSort(false);
+    setSelectedColor([]);
+    setSelectedSizes([]);
   };
 
   const handleCategoryChange = (newCategory) => {
@@ -121,6 +130,17 @@ const Catalog = () => {
     return sizes;
   }, []);
 
+  const getTypeCategories = (items, targetType) => {
+    const filteredItems = allItems.filter((item) => item.type === targetType);
+    const categories = [...new Set(filteredItems.map((item) => item.category))];
+    return categories;
+  };
+
+  // Пример использования для категорий типа "clothes"
+  const dynamicCategories = getTypeCategories(allItems, selectedType);
+  // console.log(dynamicCategories);
+
+  console.log(allItems);
   const uniqueSizes = [...new Set(currentAvailableSizes)].sort(customSizeOrder);
   const onClickSize = (sizeName) => {
     if (selectedSizes.includes(sizeName)) {
@@ -149,14 +169,11 @@ const Catalog = () => {
       setSelectedColor((selectedColor) => [...selectedColor, colorName]);
     }
   };
-  console.log(uniqueColors, uniqueSizes, "2 консль");
 
   const allSizes = items.reduce((sizes, item) => {
     sizes.push(...item.size);
     return sizes;
   }, []);
-
-  // const uniqueSizes = [...new Set(allSizes)];
 
   const gender = ["женское", "мужское"];
 
@@ -172,53 +189,57 @@ const Catalog = () => {
   //   { title: "джинсы", value: "jeans" },
   //   { title: "пальто", value: "coat" },
   // ];
-  const manCategoryClothesTitle = "мужская одежда";
-  const manCategoryShoesTitle = "мужская обувь";
-  const manCategoryAccessoriesTitle = "мужские акссесуары";
-  const womanCategoryClothesTitle = "женская одежда";
-  const womanCategoryShoesTitle = "женская обувь";
-  const womanCategoryAccessoriesTitle = "женские акссесуары";
-  const manCategoryClothes = [
-    "Все",
-    "мужские",
-    "Одежды",
-    "Свитеры",
-    "Брюки",
-    "рубашки",
-    "джинсы",
-    "пальто",
-  ];
-  const manCategoryShoes = ["Вся", "мужская", "обувь", "кроссовки"];
-  const manCategoryAccessories = ["Все", "мужские", "браслеты"];
 
-  const womanCategoryClothes = [
-    "Все",
-    "женские",
-    "Одежды",
-    "Свитеры",
-    "Брюки",
-    "рубашки",
-    "джинсы",
-    "пальто",
-  ];
-  const womanCategoryShoes = ["Вся", "женская", "обувь"];
-  const womanCategoryAccessories = ["Все", "женские", "браслеты"];
-
-  const categoriesData = {
-    clothes: {
-      мужское: manCategoryClothes,
-      женское: womanCategoryClothes,
-    },
-    shoes: {
-      мужское: manCategoryShoes,
-      женское: womanCategoryShoes,
-    },
-    accessories: {
-      мужское: manCategoryAccessories,
-      женское: womanCategoryAccessories,
-    },
+  const categoryTitles = {
+    manCategoryClothes: "мужская одежда",
+    manCategoryShoes: "мужская обувь",
+    manCategoryAccessories: "мужские аксессуары",
+    womanCategoryClothes: "женская одежда",
+    womanCategoryShoes: "женская обувь",
+    womanCategoryAccessories: "женские аксессуары",
   };
 
+  const firstUppercase = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+  const renderTitle = `${
+    selectedGender === "женское" ? "woman" : "man"
+  }Category${firstUppercase(selectedType)}`;
+
+  // const manCategoryClothes = [
+  //   "Свитеры",
+  //   "Брюки",
+  //   "рубашки",
+  //   "джинсы",
+  //   "пальто",
+  // ];
+  // const manCategoryShoes = ["кроссовки"];
+  // const manCategoryAccessories = ["браслеты"];
+
+  // const womanCategoryClothes = [
+  //   "Свитеры",
+  //   "Брюки",
+  //   "рубашки",
+  //   "джинсы",
+  //   "пальто",
+  // ];
+  // const womanCategoryShoes = ["кроссовки"];
+  // const womanCategoryAccessories = ["браслеты"];
+
+  // const categoriesData = {
+  //   clothes: {
+  //     мужское: manCategoryClothes,
+  //     женское: womanCategoryClothes,
+  //   },
+  //   shoes: {
+  //     мужское: manCategoryShoes,
+  //     женское: womanCategoryShoes,
+  //   },
+  //   accessories: {
+  //     мужское: manCategoryAccessories,
+  //     женское: womanCategoryAccessories,
+  //   },
+  // };
   const sort = [
     {
       name: "по новизне",
@@ -236,7 +257,6 @@ const Catalog = () => {
 
   return (
     <div className="catalog">
-      <h1>{availableColor.join("|")}</h1>
       <div className="container">
         <div className="catalog__type">
           <ul className="catalog__gender">
@@ -301,10 +321,10 @@ const Catalog = () => {
             {openCategory && (
               <div className="catalog__category-popupinner">
                 <span className="catalog__category-popuptitle">
-                  {gender[genderIndex]} одежда
+                  {categoryTitles[renderTitle]}
                 </span>
                 <ul className="catalog__category-popup">
-                  {categoriesData[selectedType][selectedGender].map(
+                  {/* {categoriesData[selectedType][selectedGender].map(
                     (category, index) => (
                       <CatalogCategoryItem
                         onSelectedCategory={handleCategoryChange}
@@ -312,7 +332,14 @@ const Catalog = () => {
                         category={category}
                       />
                     )
-                  )}
+                  )} */}
+                  {dynamicCategories.map((category, index) => (
+                    <CatalogCategoryItem
+                      onSelectedCategory={handleCategoryChange}
+                      key={index}
+                      category={category}
+                    />
+                  ))}
                 </ul>
               </div>
             )}
