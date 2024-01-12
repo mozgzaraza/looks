@@ -4,13 +4,15 @@ function Header() {
   return (
     <div className="header">
       <div className="container">
-        <img className="logo" src="./img/logo.svg" alt="logo" />
+        <Link to="/">
+          <img className="logo" src="./img/logo.svg" alt="logo" />
+          <img className="logo--black" src="./img/logo-black.svg" alt="logo" />
+        </Link>
         <nav className="menu">
           <ul className="menu__list">
             <li className="menu__item">
               <Link to="/catalog">Каталог</Link>
             </li>
-
             <li className="menu__item">О нас</li>
             <li className="menu__item">Правила</li>
             <li className="menu__item">Контакты</li>

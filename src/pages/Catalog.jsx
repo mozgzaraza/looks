@@ -1,5 +1,6 @@
 import React from "react";
 
+import Header from "../components/Header";
 import CatalogItem from "../components/CatalogItem";
 import Skeleton from "../components/CatalogItem/Skeleton";
 import CatalogCategoryItem from "../components/CatalogCategoryItem";
@@ -206,40 +207,6 @@ const Catalog = () => {
     selectedGender === "женское" ? "woman" : "man"
   }Category${firstUppercase(selectedType)}`;
 
-  // const manCategoryClothes = [
-  //   "Свитеры",
-  //   "Брюки",
-  //   "рубашки",
-  //   "джинсы",
-  //   "пальто",
-  // ];
-  // const manCategoryShoes = ["кроссовки"];
-  // const manCategoryAccessories = ["браслеты"];
-
-  // const womanCategoryClothes = [
-  //   "Свитеры",
-  //   "Брюки",
-  //   "рубашки",
-  //   "джинсы",
-  //   "пальто",
-  // ];
-  // const womanCategoryShoes = ["кроссовки"];
-  // const womanCategoryAccessories = ["браслеты"];
-
-  // const categoriesData = {
-  //   clothes: {
-  //     мужское: manCategoryClothes,
-  //     женское: womanCategoryClothes,
-  //   },
-  //   shoes: {
-  //     мужское: manCategoryShoes,
-  //     женское: womanCategoryShoes,
-  //   },
-  //   accessories: {
-  //     мужское: manCategoryAccessories,
-  //     женское: womanCategoryAccessories,
-  //   },
-  // };
   const sort = [
     {
       name: "по новизне",
@@ -257,6 +224,7 @@ const Catalog = () => {
 
   return (
     <div className="catalog">
+      <Header />
       <div className="container">
         <div className="catalog__type">
           <ul className="catalog__gender">
