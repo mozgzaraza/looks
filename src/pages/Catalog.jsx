@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { AllItemsContext } from "../App";
 
 import Header from "../components/Header";
 import CatalogItem from "../components/CatalogItem";
@@ -12,13 +14,12 @@ const Catalog = () => {
   const [genderIndex, setGenderIndex] = React.useState(1);
 
   const [selectedType, setSelectedType] = React.useState("");
-  const [selectedCategory, setSelectedCategory] = React.useState("*");
+  const [selectedCategory, setSelectedCategory] = React.useState("");
   const [selectedAll, setSelectedAll] = React.useState(true);
 
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [openCategory, setOpenCategory] = React.useState(false);
-
   const [openSort, setOpenSort] = React.useState(false);
 
   const [selectedSort, setSelectedSort] = React.useState({
@@ -64,7 +65,9 @@ const Catalog = () => {
           setIsLoading(false);
         }
       });
-
+    if (selectedAll && !allItems.length) {
+      setAllItems(items);
+    }
     window.scrollTo(0, 0);
   }, [
     genderIndex,
@@ -137,11 +140,8 @@ const Catalog = () => {
     return categories;
   };
 
-  // Пример использования для категорий типа "clothes"
   const dynamicCategories = getTypeCategories(allItems, selectedType);
-  // console.log(dynamicCategories);
 
-  console.log(allItems);
   const uniqueSizes = [...new Set(currentAvailableSizes)].sort(customSizeOrder);
   const onClickSize = (sizeName) => {
     if (selectedSizes.includes(sizeName)) {
@@ -149,6 +149,7 @@ const Catalog = () => {
         selectedSizes.filter((size) => size !== sizeName)
       );
     } else {
+      setSelectedAll(false);
       setSelectedSizes((selectedSizes) => [...selectedSizes, sizeName]);
     }
   };
@@ -168,6 +169,7 @@ const Catalog = () => {
       );
     } else {
       setSelectedColor((selectedColor) => [...selectedColor, colorName]);
+      setSelectedAll(false);
     }
   };
 
@@ -223,7 +225,7 @@ const Catalog = () => {
   ];
 
   return (
-    <div className="catalog">
+    <section className="catalog">
       <Header />
       <div className="container">
         <div className="catalog__type">
@@ -292,15 +294,6 @@ const Catalog = () => {
                   {categoryTitles[renderTitle]}
                 </span>
                 <ul className="catalog__category-popup">
-                  {/* {categoriesData[selectedType][selectedGender].map(
-                    (category, index) => (
-                      <CatalogCategoryItem
-                        onSelectedCategory={handleCategoryChange}
-                        key={index}
-                        category={category}
-                      />
-                    )
-                  )} */}
                   {dynamicCategories.map((category, index) => (
                     <CatalogCategoryItem
                       onSelectedCategory={handleCategoryChange}
@@ -315,7 +308,11 @@ const Catalog = () => {
         </div>
         <div className="catalog__filter">
           <h1 className="catalog__filter-title">
-            {selectedAll ? "Все" : selectedCategory}
+            {items.length === allItems.length
+              ? "Все"
+              : selectedCategory
+              ? selectedCategory
+              : "По запросу"}
 
             <span>{items.length}</span>
           </h1>
@@ -397,10 +394,14 @@ const Catalog = () => {
         <div className="catalog__content">
           {isLoading
             ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-            : items.map((obj) => <CatalogItem key={obj.id} {...obj} />)}
+            : items.map((obj) => (
+                <Link to={`/product/${obj.id}`}>
+                  <CatalogItem key={obj.id} {...obj} />
+                </Link>
+              ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 export default Catalog;

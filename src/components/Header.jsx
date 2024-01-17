@@ -6,7 +6,7 @@ function Header() {
       <div className="container">
         <Link to="/">
           <img className="logo" src="./img/logo.svg" alt="logo" />
-          <img className="logo--black" src="./img/logo-black.svg" alt="logo" />
+          <img className="logo--black" src="../img/logo-black.svg" alt="logo" />
         </Link>
         <nav className="menu">
           <ul className="menu__list">

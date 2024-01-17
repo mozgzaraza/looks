@@ -1,6 +1,9 @@
-function CatalogItem({ title, price, imageUrl }) {
+function CatalogItem({ title, price, imageUrl, size }) {
   return (
-    <div className="catalog__item">
+    <div
+      onClick={() => console.log(size, price, title)}
+      className="catalog__item"
+    >
       <img
         className="catalog__item-img"
         src={imageUrl}
