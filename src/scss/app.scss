@@ -754,6 +754,14 @@ body {
   &__info-item {
     &:nth-child(1) {
       max-width: 300px;
+      width: 100%;
+      margin-right: 30px;
+    }
+    &:nth-child(2) {
+      max-width: 220px;
+      span {
+        display: block;
+      }
     }
   }
   &__btn {
@@ -788,6 +796,7 @@ body {
       display: inline-flex;
     }
     p {
+      text-align: center;
       color: #6b6570;
       margin: 0 10px;
       padding: 5px 10px;
@@ -835,6 +844,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.2em;
   }
+
   &__photo {
     max-width: 55%;
     // height: calc(100vh - 150px);
@@ -846,6 +856,7 @@ body {
   }
   &__photo-item {
     img {
+      user-select: none;
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -855,13 +866,38 @@ body {
       grid-row: span 2;
     }
   }
-}
-.div1 {
-  grid-area: 1 / 1 / 3 / 3;
-}
-.div2 {
-  grid-area: 1 / 3 / 2 / 5;
-}
-.div3 {
-  grid-area: 2 / 3 / 3 / 5;
+  &__gallery {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    span {
+      cursor: pointer;
+      height: 100px;
+      width: 100px;
+      margin: 0 20px;
+      display: flex;
+      align-items: center;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      &:first-child {
+        background-image: url("../../public/img/icons/white-angle.svg");
+        transform: rotate(180deg);
+      }
+      &:last-child {
+        background-image: url("../../public/img/icons/white-angle.svg");
+      }
+    }
+    img {
+      user-select: none;
+      height: 70vh;
+    }
+  }
 }

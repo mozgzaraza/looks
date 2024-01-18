@@ -18,6 +18,7 @@ function App() {
         <Route path="/product/:productId" element={<Product />} />
         {/* <Catalog /> */}
       </Routes>
+
       <Contacts />
 
       <Footer />

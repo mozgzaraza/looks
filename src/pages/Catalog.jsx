@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AllItemsContext } from "../App";
 
 import Header from "../components/Header";
 import CatalogItem from "../components/CatalogItem";
@@ -173,10 +172,10 @@ const Catalog = () => {
     }
   };
 
-  const allSizes = items.reduce((sizes, item) => {
-    sizes.push(...item.size);
-    return sizes;
-  }, []);
+  // const allSizes = items.reduce((sizes, item) => {
+  //   sizes.push(...item.size);
+  //   return sizes;
+  // }, []);
 
   const gender = ["женское", "мужское"];
 
@@ -216,11 +215,11 @@ const Catalog = () => {
     },
     {
       name: "сначала дешевые",
-      sortProperty: "price&order=asc",
+      sortProperty: "rentPrice&order=asc",
     },
     {
       name: "сначала дорогие",
-      sortProperty: "price&order=desc",
+      sortProperty: "rentPrice&order=desc",
     },
   ];
 
@@ -333,7 +332,7 @@ const Catalog = () => {
               <div className="catalog__size-inner">
                 <span>размер</span>
                 <ul className="catalog__size">
-                  {uniqueSizes.map((obj, i) => (
+                  {availableSizes.map((obj, i) => (
                     <li
                       onClick={() => onClickSize(obj)}
                       key={i}
@@ -352,7 +351,7 @@ const Catalog = () => {
               <div className="catalog__color-inner">
                 <span>цвет</span>
                 <ul className="catalog__color">
-                  {uniqueColors.map((obj, i) => (
+                  {availableColor.map((obj, i) => (
                     <li
                       onClick={() => onClickColor(obj)}
                       key={i}

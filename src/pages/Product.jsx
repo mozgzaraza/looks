@@ -11,6 +11,9 @@ function Product() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [typeRent, setTypeRent] = React.useState("rent");
+  const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
+  const [openGallery, setOpenGallery] = React.useState(false);
+  const [scrollbarWidth, setScrollbarWidth] = React.useState(0);
 
   React.useEffect(() => {
     fetch("https://659c1f85d565feee2dac75bf.mockapi.io/items")
@@ -31,10 +34,39 @@ function Product() {
   if (isLoading === true) {
     return <div>Loading...</div>;
   }
-  const product = allItems.find((item) => item.id == productId);
+  const product = allItems.find((item) => `${item.id}` === productId);
+  const totalImages = product.imageGalleryUrl.length;
 
+  const showPreviousImage = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : totalImages - 1``
+    );
+  };
+
+  const showNextImage = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex < totalImages - 1 ? prevIndex + 1 : 0
+    );
+  };
+
+  const openGalleryPopup = () => {
+    setOpenGallery(!openGallery);
+    calculateScrollbarWidth();
+    openGallery === true
+      ? (document.body.style.overflow = "visible")
+      : (document.body.style.overflow = "hidden");
+  };
+
+  const calculateScrollbarWidth = () => {
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    setScrollbarWidth(scrollbarWidth);
+  };
   return (
-    <section className="product">
+    <section
+      className="product"
+      style={{ paddingRight: `${scrollbarWidth}px` }}
+    >
       <Header />
       <div className="container">
         <div className="product__inner">
@@ -43,7 +75,7 @@ function Product() {
             <h1 className="product__name">{firstUppercase(product.title)}</h1>
 
             <span className="product__tags">{`${
-              product.gender == 1 ? "мужское" : "женское"
+              product.gender === "1" ? "мужское" : "женское"
             } | ${
               product.type === "clothes"
                 ? "одежда"
@@ -52,12 +84,7 @@ function Product() {
                 : "аксессуары"
             } | ${product.category}`}</span>
             <ul className="product__info">
-              <li
-                onClick={() => console.log(allItems)}
-                className="product__info-item"
-              >
-                {product.info}
-              </li>
+              <li className="product__info-item">{product.info}</li>
               <li className="product__info-item">
                 <span>Материал:</span>
                 {product.material}
@@ -101,15 +128,18 @@ function Product() {
               <button className="product__add-cart">добавить в корзину</button>
             </div>
           </div>
+
           <ul className="product__photo">
             {product.imageGalleryUrl.map((item, index) => (
               <li
                 key={index}
                 className="product__photo-item"
-                onClick={() => console.log(item)}
+                onClick={() =>
+                  setSelectedImageIndex(index) & openGalleryPopup()
+                }
               >
                 <img
-                  src={`/img/catalog/${product.id}/${index + 1}.jpg`}
+                  src={`/img/catalog/${product.id}/${index + 1}.webp`}
                   alt="фото товара"
                 />
               </li>
@@ -117,6 +147,31 @@ function Product() {
           </ul>
         </div>
       </div>
+      {openGallery ? (
+        <div onClick={() => openGalleryPopup()} className="product__gallery">
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              showPreviousImage();
+            }}
+          ></span>
+          <img
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            src={`/img/catalog/${product.id}/${selectedImageIndex + 1}.webp`}
+            alt="полное фото товара"
+          />
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              showNextImage();
+            }}
+          ></span>
+        </div>
+      ) : (
+        ""
+      )}
     </section>
   );
 }
