@@ -31,7 +31,7 @@ const Catalog = () => {
 
   const [selectedColor, setSelectedColor] = React.useState([]);
   const [availableColor, setAvailableColor] = React.useState([]);
-
+  console.log(items);
   React.useEffect(() => {
     setIsLoading(true);
     const categoryApi =
@@ -394,8 +394,8 @@ const Catalog = () => {
           {isLoading
             ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
             : items.map((obj) => (
-                <Link to={`/product/${obj.id}`}>
-                  <CatalogItem key={obj.id} {...obj} />
+                <Link key={obj.id} to={`/product/${obj.id}`}>
+                  <CatalogItem {...obj} />
                 </Link>
               ))}
         </div>

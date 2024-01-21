@@ -1,12 +1,17 @@
 import React from "react";
 
-function ProductSizeSelector({ sizes }) {
+function ProductSizeSelector({ sizes, onSizeChange }) {
   const [selectedSize, setSelectedSize] = React.useState(sizes[0]);
+
+  React.useEffect(() => {
+    onSizeChange(sizes[0]);
+  }, []);
 
   const decreaseSize = () => {
     const currentIndex = sizes.indexOf(selectedSize);
     if (currentIndex > 0) {
       setSelectedSize(sizes[currentIndex - 1]);
+      onSizeChange(sizes[currentIndex - 1]);
     }
   };
 
@@ -14,6 +19,7 @@ function ProductSizeSelector({ sizes }) {
     const currentIndex = sizes.indexOf(selectedSize);
     if (currentIndex < sizes.length - 1) {
       setSelectedSize(sizes[currentIndex + 1]);
+      onSizeChange(sizes[currentIndex + 1]);
     }
   };
 

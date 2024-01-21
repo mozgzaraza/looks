@@ -1,6 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setCart } from "../redux/slices/cartSlice";
+// import Cart from "../components/Cart";
 import Header from "../components/Header";
 import ProductSizeSelector from "../components/ProductSizeSelector";
 import ProductTimeSelector from "../components/ProductTimeSelector";
@@ -14,6 +17,26 @@ function Product() {
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
   const [openGallery, setOpenGallery] = React.useState(false);
   const [scrollbarWidth, setScrollbarWidth] = React.useState(0);
+
+  const [selectedSize, setSelectedSize] = React.useState();
+  const [selectedTime, setSelectedTime] = React.useState();
+
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+
+  const addToCart = (id) => {
+    // dispatch(setCart(id));
+    dispatch(setCart({ item: product, selectedSize, selectedTime, typeRent }));
+  };
+  console.log(cart);
+
+  const handleSizeChange = (size) => {
+    setSelectedSize(size);
+  };
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+  };
+  console.log(selectedTime);
 
   React.useEffect(() => {
     fetch("https://659c1f85d565feee2dac75bf.mockapi.io/items")
@@ -35,11 +58,16 @@ function Product() {
     return <div>Loading...</div>;
   }
   const product = allItems.find((item) => `${item.id}` === productId);
+
   const totalImages = product.imageGalleryUrl.length;
 
   const showPreviousImage = () => {
     setSelectedImageIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : totalImages - 1``
+      prevIndex > 0
+        ? prevIndex - 1
+        : prevIndex === 0
+        ? totalImages - 1
+        : totalImages``
     );
   };
 
@@ -52,8 +80,9 @@ function Product() {
   const openGalleryPopup = () => {
     setOpenGallery(!openGallery);
     calculateScrollbarWidth();
+    // document.body.style.paddingRight = `${scrollbarWidth}px`;
     openGallery === true
-      ? (document.body.style.overflow = "visible")
+      ? (document.body.style.overflow = "")
       : (document.body.style.overflow = "hidden");
   };
 
@@ -62,6 +91,18 @@ function Product() {
       window.innerWidth - document.documentElement.clientWidth;
     setScrollbarWidth(scrollbarWidth);
   };
+
+  // const addToCart = (product) => {
+  //   // Получаем текущий список продуктов в корзине из Local Storage
+  //   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+  //   // Добавляем новый продукт в корзину
+  //   cartItems.push(product);
+
+  //   // Сохраняем обновленный список продуктов в Local Storage
+  //   localStorage.setItem("cart", JSON.stringify(cartItems));
+  // };
+  // console.log(product);
   return (
     <section
       className="product"
@@ -115,17 +156,28 @@ function Product() {
 
             <div className="product__btn-info">
               {typeRent === "rent" ? (
-                <ProductTimeSelector times={product.rentTime} />
+                <ProductTimeSelector
+                  times={product.rentTime}
+                  onTimeChange={handleTimeChange}
+                />
               ) : (
                 ``
               )}
-              <ProductSizeSelector sizes={product.size} />
+              <ProductSizeSelector
+                sizes={product.size}
+                onSizeChange={handleSizeChange}
+              />
             </div>
             <div className="product__result">
               <p className="product__price">
                 {typeRent === "rent" ? product.rentPrice : product.buyPrice}Р
               </p>
-              <button className="product__add-cart">добавить в корзину</button>
+              <button
+                onClick={() => console.log("добавлено") & addToCart(product)}
+                className="product__add-cart"
+              >
+                добавить в корзину
+              </button>
             </div>
           </div>
 

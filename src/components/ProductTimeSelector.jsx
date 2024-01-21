@@ -1,12 +1,16 @@
 import React from "react";
 
-function ProductTimeSelector({ times }) {
+function ProductTimeSelector({ times, onTimeChange }) {
   const [selectedTime, setSelectedTime] = React.useState(times[0]);
 
+  React.useEffect(() => {
+    onTimeChange(times[0]);
+  }, []);
   const decreaseTime = () => {
     const currentIndex = times.indexOf(selectedTime);
     if (currentIndex > 0) {
       setSelectedTime(times[currentIndex - 1]);
+      onTimeChange(times[currentIndex - 1]);
     }
   };
 
@@ -14,6 +18,7 @@ function ProductTimeSelector({ times }) {
     const currentIndex = times.indexOf(selectedTime);
     if (currentIndex < times.length - 1) {
       setSelectedTime(times[currentIndex + 1]);
+      onTimeChange(times[currentIndex + 1]);
     }
   };
 

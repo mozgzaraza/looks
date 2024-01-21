@@ -1,6 +1,11 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
+import ProductTimeSelector from "../components/ProductTimeSelector";
+import Cart from "./Cart";
+
 function Header() {
+  const [openCart, setOpenCart] = React.useState(false);
   return (
     <div className="header">
       <div className="container">
@@ -16,7 +21,9 @@ function Header() {
             <li className="menu__item">О нас</li>
             <li className="menu__item">Правила</li>
             <li className="menu__item">Контакты</li>
-            <li className="menu__item">Корзина</li>
+            <li onClick={() => setOpenCart(true)} className="menu__item">
+              Корзина
+            </li>
           </ul>
           <button className="menu__burger">
             <span></span>
@@ -37,6 +44,7 @@ function Header() {
             </button>
           </div>
         </nav>
+        {openCart ? <Cart setOpenCart={setOpenCart} /> : ""}
       </div>
     </div>
   );

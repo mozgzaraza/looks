@@ -901,3 +901,172 @@ body {
     }
   }
 }
+// .cart-popup {
+//   padding: 60px;
+//   background-color: #fff;
+//   position: static;
+//   z-index: 2;
+//   &:before {
+//     content: "";
+//     position: absolute;
+//     width: 100%;
+//     height: 100vh;
+//     background-color: rgba(0, 0, 0, 0.5);
+//     top: 0;
+//     left: 0;
+//     z-index: 1;
+//   }
+// }
+.cart-popup {
+  padding: 60px;
+  background-color: #fff;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  max-width: 820px;
+  width: 100%;
+
+  &__wrapper {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  &__close {
+    cursor: pointer;
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    background-image: url("../../public/img/icons/close.svg");
+  }
+  &__content {
+    padding: 50px 0;
+    border-top: 1px solid rgba(107, 101, 112, 0.2);
+    border-bottom: 1px solid rgba(107, 101, 112, 0.2);
+    margin-bottom: 40px;
+  }
+  &__content-titles {
+    display: flex;
+    justify-content: end;
+    color: #6b6570;
+    margin-bottom: 30px;
+  }
+  &__content-title {
+    &:first-child {
+      margin-right: auto;
+    }
+    &:nth-child(2) {
+      margin-right: 85px;
+    }
+    &:last-child {
+      margin-right: 80px;
+    }
+  }
+  &__content-empty {
+    margin: 50px auto;
+    text-align: center;
+  }
+  &__products {
+    max-height: 45vh;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: rgba(107, 101, 112, 0.2);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #6b6570;
+    }
+  }
+  &__product {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+  &__product-img {
+    width: 64px;
+    height: 80px;
+    background-color: #000;
+    margin-right: 14px;
+    object-fit: cover;
+  }
+  &__product-info {
+    margin-right: 50px;
+    max-width: 200px;
+    width: 100%;
+  }
+  &__product-name {
+    display: block;
+    text-transform: none;
+    font-size: 17px;
+  }
+  &__product-code {
+    margin-right: 15px;
+  }
+  &__product-code,
+  &__product-size {
+    color: #6b6570;
+    font-size: 12px;
+  }
+  .product__btn-time {
+    max-width: 220px;
+    width: 100%;
+    justify-content: center;
+    p {
+      width: 100%;
+    }
+    margin-right: 40px;
+  }
+  &__product-price {
+    margin-right: 35px;
+  }
+  &__product-delete {
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    background-image: url("../../public/img/icons/delete.svg");
+    margin-right: 15px;
+  }
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__total {
+    font-size: 23px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  &__btn {
+    max-width: 250px;
+    width: 100%;
+    height: 60px;
+    color: #fff;
+    background-color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+}
