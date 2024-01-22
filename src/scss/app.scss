@@ -536,15 +536,49 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 20px;
+    a {
+      margin-bottom: 50px;
+    }
   }
   &__item {
     color: #000;
-    margin-bottom: 50px;
     height: auto;
+    &:hover {
+      .catalog__item-imgbox:after {
+        opacity: 1;
+        visibility: visible;
+        background-size: 35%;
+      }
+    }
+    &:active {
+      .catalog__item-imgbox:after {
+        background-size: 15%;
+        transition: background-size 0.2s;
+      }
+    }
   }
-  &__item-img {
+  &__item-imgbox {
+    position: relative;
     margin-bottom: 15px;
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("../../public/img/icons/zoom.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 15%;
+      background-color: #33333387;
+      z-index: 2;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, background-size 0.5s;
+    }
   }
+
   &__item-title {
     font-size: 14px;
     margin-bottom: 10px;
@@ -566,12 +600,13 @@ body {
     width: 930px;
     right: 0;
     box-shadow: 0px 0px 70px rgba(0, 0, 0, 0.1);
-    visibility: hidden;
-    opacity: 0;
-    &--active {
-      visibility: visible;
-      opacity: 1;
-    }
+    z-index: 6;
+    // visibility: hidden;
+    // opacity: 0;
+    // &--active {
+    //   // visibility: visible;
+    //   opacity: 1;
+    // }
   }
 
   &__size-inner,
@@ -776,10 +811,27 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: #6b6570;
+    transition: color 0.2s, transform 0.1s;
     &--active {
       font-weight: bold;
       color: #000;
       border-bottom: 2px solid #000;
+    }
+
+    &:hover {
+      transform: scale(105%);
+      color: #000;
+    }
+    &:active {
+      transform: scale(90%);
+    }
+  }
+  .product__btn-item.product__btn-item--active {
+    &:hover {
+      transform: scale(100%);
+    }
+    &:active {
+      transform: scale(100%);
     }
   }
   &__btn-info {
@@ -821,14 +873,30 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(130%);
+    }
+    &:active {
+      transform: scale(90%);
+      transition: transform 0.15s;
+    }
   }
   &__btn-disabled {
     opacity: 0.2;
     cursor: auto;
+
+    &:hover {
+      transform: scale(100%);
+    }
+    &:active {
+      transform: scale(100%);
+    }
   }
   &__result {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   &__price {
     font-size: 36px;
@@ -843,6 +911,12 @@ body {
     background-color: #000;
     text-transform: uppercase;
     letter-spacing: 0.2em;
+    transition: transform 0.3s;
+
+    &:active {
+      transform: scale(95%);
+      transition: transform 0.15s;
+    }
   }
 
   &__photo {
@@ -855,6 +929,8 @@ body {
     grid-row-gap: 20px;
   }
   &__photo-item {
+    cursor: pointer;
+    position: relative;
     img {
       user-select: none;
       object-fit: cover;
@@ -865,11 +941,42 @@ body {
       grid-area: 1 / 1 / 5 / 3;
       grid-row: span 2;
     }
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("../../public/img/icons/zoom.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 15%;
+      background-color: #33333387;
+      z-index: 2;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, background-size 0.5s;
+    }
+    &:hover {
+      &:after {
+        opacity: 1;
+        visibility: visible;
+        background-size: 35%;
+      }
+    }
+    &:active {
+      &:after {
+        background-size: 15%;
+        transition: background-size 0.2s;
+      }
+    }
   }
   &__gallery {
     width: 100%;
     height: 100vh;
     position: fixed;
+    z-index: 20;
     top: 0;
     left: 0;
     display: flex;
@@ -886,13 +993,23 @@ body {
       align-items: center;
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
+      background-size: 100%;
+      transition: background 0.3s;
       &:first-child {
         background-image: url("../../public/img/icons/white-angle.svg");
         transform: rotate(180deg);
       }
       &:last-child {
         background-image: url("../../public/img/icons/white-angle.svg");
+      }
+      &:hover {
+        background-size: 130%;
+      }
+      &:active {
+        background-size: 90%;
+        transition: background 0.15s;
+      }
+      &:focus {
       }
     }
     img {
@@ -901,22 +1018,7 @@ body {
     }
   }
 }
-// .cart-popup {
-//   padding: 60px;
-//   background-color: #fff;
-//   position: static;
-//   z-index: 2;
-//   &:before {
-//     content: "";
-//     position: absolute;
-//     width: 100%;
-//     height: 100vh;
-//     background-color: rgba(0, 0, 0, 0.5);
-//     top: 0;
-//     left: 0;
-//     z-index: 1;
-//   }
-// }
+
 .cart-popup {
   padding: 60px;
   background-color: #fff;
@@ -937,7 +1039,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 6;
   }
   &__top {
     display: flex;
@@ -955,6 +1057,14 @@ body {
     background-position: center;
     background-size: 50%;
     background-image: url("../../public/img/icons/close.svg");
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(120%);
+    }
+    &:active {
+      transform: scale(80%);
+      transition: transform 0.1s;
+    }
   }
   &__content {
     padding: 50px 0;
@@ -973,10 +1083,10 @@ body {
       margin-right: auto;
     }
     &:nth-child(2) {
-      margin-right: 85px;
+      margin-right: 70px;
     }
     &:last-child {
-      margin-right: 80px;
+      margin-right: 105px;
     }
   }
   &__content-empty {
@@ -999,6 +1109,7 @@ body {
   &__product {
     display: flex;
     align-items: center;
+    justify-content: end;
 
     &:not(:last-child) {
       margin-bottom: 20px;
@@ -1036,19 +1147,30 @@ body {
     p {
       width: 100%;
     }
-    margin-right: 40px;
+    margin-right: 20px;
   }
   &__product-price {
     margin-right: 35px;
+    max-width: 70px;
+    width: 100%;
+    text-align: center;
   }
   &__product-delete {
     height: 40px;
-    width: 40px;
+    min-width: 40px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70%;
     background-image: url("../../public/img/icons/delete.svg");
     margin-right: 15px;
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(120%);
+    }
+    &:active {
+      transform: scale(80%);
+      transition: transform 0.1s;
+    }
   }
   &__bottom {
     display: flex;
@@ -1069,4 +1191,18 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.2em;
   }
+}
+.animation-popup-enter {
+  opacity: 0;
+}
+.animation-popup-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.animation-popup-exit {
+  opacity: 1;
+}
+.animation-popup-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
 }

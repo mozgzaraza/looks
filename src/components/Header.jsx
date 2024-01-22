@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
-import ProductTimeSelector from "../components/ProductTimeSelector";
 import Cart from "./Cart";
-
 function Header() {
   const [openCart, setOpenCart] = React.useState(false);
   return (
@@ -44,7 +43,17 @@ function Header() {
             </button>
           </div>
         </nav>
-        {openCart ? <Cart setOpenCart={setOpenCart} /> : ""}
+        {/* <div className={`cart-container ${openCart ? "open" : ""}`}>
+          {openCart ? <Cart setOpenCart={setOpenCart} /> : ""}
+        </div> */}
+        <CSSTransition
+          in={openCart}
+          timeout={200}
+          classNames="animation-popup"
+          unmountOnExit
+        >
+          <Cart setOpenCart={setOpenCart} />
+        </CSSTransition>
       </div>
     </div>
   );

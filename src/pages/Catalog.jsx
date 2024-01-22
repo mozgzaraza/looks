@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
 import Header from "../components/Header";
 import CatalogItem from "../components/CatalogItem";
@@ -287,7 +288,7 @@ const Catalog = () => {
               </li>
             </ul>
 
-            {openCategory && (
+            {/* {openCategory && (
               <div className="catalog__category-popupinner">
                 <span className="catalog__category-popuptitle">
                   {categoryTitles[renderTitle]}
@@ -302,9 +303,31 @@ const Catalog = () => {
                   ))}
                 </ul>
               </div>
-            )}
+            )} */}
+            <CSSTransition
+              in={openCategory}
+              timeout={300}
+              classNames="animation-popup"
+              unmountOnExit
+            >
+              <div className="catalog__category-popupinner">
+                <span className="catalog__category-popuptitle">
+                  {categoryTitles[renderTitle]}
+                </span>
+                <ul className="catalog__category-popup">
+                  {dynamicCategories.map((category, index) => (
+                    <CatalogCategoryItem
+                      onSelectedCategory={handleCategoryChange}
+                      key={index}
+                      category={category}
+                    />
+                  ))}
+                </ul>
+              </div>
+            </CSSTransition>
           </div>
         </div>
+
         <div className="catalog__filter">
           <h1 className="catalog__filter-title">
             {items.length === allItems.length
@@ -322,71 +345,79 @@ const Catalog = () => {
             >
               фильтр и сортировка
             </button>
-            <div
-              className={
-                openSort
-                  ? "catalog__filter-popup catalog__filter-popup--active"
-                  : "catalog__filter-popup"
-              }
+            <CSSTransition
+              in={openSort}
+              timeout={300}
+              classNames="animation-popup"
+              unmountOnExit
             >
-              <div className="catalog__size-inner">
-                <span>размер</span>
-                <ul className="catalog__size">
-                  {availableSizes.map((obj, i) => (
-                    <li
-                      onClick={() => onClickSize(obj)}
-                      key={i}
-                      className={
-                        selectedSizes.includes(obj)
-                          ? "catalog__size-item catalog__size-item--active"
-                          : "catalog__size-item"
-                      }
-                    >
-                      <span></span>
-                      {obj}
-                    </li>
-                  ))}
-                </ul>
+              {/* <div
+                className={
+                  openSort
+                    ? "catalog__filter-popup catalog__filter-popup--active"
+                    : "catalog__filter-popup"
+                }
+              > */}
+              <div className={"catalog__filter-popup"}>
+                <div className="catalog__size-inner">
+                  <span>размер</span>
+                  <ul className="catalog__size">
+                    {availableSizes.map((obj, i) => (
+                      <li
+                        onClick={() => onClickSize(obj)}
+                        key={i}
+                        className={
+                          selectedSizes.includes(obj)
+                            ? "catalog__size-item catalog__size-item--active"
+                            : "catalog__size-item"
+                        }
+                      >
+                        <span></span>
+                        {obj}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="catalog__color-inner">
+                  <span>цвет</span>
+                  <ul className="catalog__color">
+                    {availableColor.map((obj, i) => (
+                      <li
+                        onClick={() => onClickColor(obj)}
+                        key={i}
+                        className={
+                          selectedColor.includes(obj)
+                            ? "catalog__color-item catalog__color-item--active"
+                            : "catalog__color-item"
+                        }
+                      >
+                        <span></span>
+                        {obj}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="catalog__sort-inner">
+                  <span>сортировка</span>
+                  <ul className="catalog__sort">
+                    {sort.map((obj, i) => (
+                      <li
+                        onClick={() => setSelectedSort(obj)}
+                        key={i}
+                        className={
+                          selectedSort.sortProperty === obj.sortProperty
+                            ? "catalog__sort-item catalog__sort-item--active"
+                            : "catalog__sort-item "
+                        }
+                      >
+                        <span></span>
+                        {obj.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div className="catalog__color-inner">
-                <span>цвет</span>
-                <ul className="catalog__color">
-                  {availableColor.map((obj, i) => (
-                    <li
-                      onClick={() => onClickColor(obj)}
-                      key={i}
-                      className={
-                        selectedColor.includes(obj)
-                          ? "catalog__color-item catalog__color-item--active"
-                          : "catalog__color-item"
-                      }
-                    >
-                      <span></span>
-                      {obj}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="catalog__sort-inner">
-                <span>сортировка</span>
-                <ul className="catalog__sort">
-                  {sort.map((obj, i) => (
-                    <li
-                      onClick={() => setSelectedSort(obj)}
-                      key={i}
-                      className={
-                        selectedSort.sortProperty === obj.sortProperty
-                          ? "catalog__sort-item catalog__sort-item--active"
-                          : "catalog__sort-item "
-                      }
-                    >
-                      <span></span>
-                      {obj.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            </CSSTransition>
           </div>
         </div>
 

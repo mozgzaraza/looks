@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCart } from "../redux/slices/cartSlice";
-// import Cart from "../components/Cart";
+
 import Header from "../components/Header";
 import ProductSizeSelector from "../components/ProductSizeSelector";
 import ProductTimeSelector from "../components/ProductTimeSelector";
@@ -25,7 +25,6 @@ function Product() {
   const cart = useSelector((state) => state.cart);
 
   const addToCart = (id) => {
-    // dispatch(setCart(id));
     dispatch(setCart({ item: product, selectedSize, selectedTime, typeRent }));
   };
   console.log(cart);
@@ -92,17 +91,6 @@ function Product() {
     setScrollbarWidth(scrollbarWidth);
   };
 
-  // const addToCart = (product) => {
-  //   // Получаем текущий список продуктов в корзине из Local Storage
-  //   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-  //   // Добавляем новый продукт в корзину
-  //   cartItems.push(product);
-
-  //   // Сохраняем обновленный список продуктов в Local Storage
-  //   localStorage.setItem("cart", JSON.stringify(cartItems));
-  // };
-  // console.log(product);
   return (
     <section
       className="product"

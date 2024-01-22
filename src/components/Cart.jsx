@@ -1,24 +1,3 @@
-// import React from "react";
-
-// const Cart = () => {
-//   // Получаем текущий список продуктов в корзине из Local Storage
-//   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-//   return (
-//     <div className="cart">
-//       <h2>Корзина</h2>
-//       <ul>
-//         {cartItems.map((item, index) => (
-//           <li key={index}>
-//             {item.title} - {item.price}Р
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Cart;
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../redux/slices/cartSlice";
@@ -39,11 +18,7 @@ function Cart({ setOpenCart }) {
     );
   };
   const totalSum = cart.cart.reduce((sum, item) => {
-    return (
-      sum +
-      (item.typeRent === "rent" ? item.rentPrice : item.buyPrice) *
-        item.quantity
-    );
+    return sum + (item.typeRent === "rent" ? item.rentPrice : item.buyPrice);
   }, 0);
   const handleTimeChange = (time) => {
     setSelectedTime(time);
